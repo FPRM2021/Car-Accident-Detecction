@@ -1,0 +1,37 @@
+python 3.7*
+
+Usar pip si es la unica version de python, en otro caso usar pip3
+
+pip install numpy
+pip install six
+pip install tensorflow
+pip install opencv-python
+
+/////////////////////////////////////
+faltan las imagenes para la entrenar, eso pesaba mucho,
+pueden poner las imagenes pero en la carpeta que corresponde
+tf_files/acc_photos/  accidente o no accidente
+lo preferible que los nombres de las imagenes no tengan espacios
+/////////////////////////////////////
+
+Implementacion - Reentrenamiento usando inception-v3
+
+python -m scripts.retrain \
+  --bottleneck_dir=tf_files/bottlenecks \
+  --model_dir=tf_files/models/"${ARCHITECTURE}" \
+  --summaries_dir=tf_files/training_summaries/"${ARCHITECTURE}" \
+  --output_graph=tf_files/retrained_graph.pb \
+  --output_labels=tf_files/retrained_labels.txt \
+  --image_dir=tf_files/acc_photos
+
+Classificador - clasificar el tipo de imagen (accidento o no accidente)
+
+python -m scripts.label_image \
+    --image=tf_files/test/test_image02.jpg
+
+//////
+si va a capturar frames de video
+en lavel_image.py cambiar al nombre (linea 95) del video mp4 localizado en carpeta video
+los frames se guardaran en la carpeta data
+//////
+python -m scripts.label_image
